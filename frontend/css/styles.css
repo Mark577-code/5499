@@ -167,17 +167,19 @@ nav {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 1000;
+    animation: fadeIn 0.3s ease;
 }
 
 .auth-content {
-    background-color: white;
-    margin: 5% auto;
+    background: white;
     padding: 2rem;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 8px;
+    border-radius: 15px;
     position: relative;
-    animation: slideDown 0.3s ease-out;
+    width: 90%;
+    max-width: 400px;
+    margin: 10vh auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
 }
 
 @keyframes slideDown {
@@ -197,16 +199,19 @@ nav {
 }
 
 .auth-logo {
-    width: 90px;
+    width: 80px;
     height: 80px;
+    object-fit: contain;
     margin-bottom: 1rem;
-    background: none;
     border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: white;
+    padding: 8px;
     transition: transform 0.3s ease;
 }
 
 .auth-logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .auth-header h2 {
@@ -861,4 +866,43 @@ nav {
     margin: 1rem;
     grid-column: 1 / -1;
     color: #666;
+}
+
+/* 添加动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 关闭按钮样式优化 */
+.auth-content .close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.auth-content .close:hover {
+    background: rgba(0,0,0,0.1);
+    transform: rotate(90deg);
 }

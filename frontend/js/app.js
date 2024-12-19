@@ -69,7 +69,7 @@ function renderTemplates(category = 'all') {
                 fragment.appendChild(card);
             });
         } else {
-            // 如果该类���没有模板，显示提示信息
+            // 如果该类别没有模板，显示提示信息
             const emptyMessage = document.createElement('div');
             emptyMessage.className = 'empty-message';
             emptyMessage.textContent = uiText[currentLang].emptyCategory || '该类别暂无内容';
@@ -255,8 +255,39 @@ function showAuthModal(modalId) {
 }
 
 function closeAuthModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+        // 清空表单
+        const form = modal.querySelector('form');
+        if (form) {
+            form.reset();
+        }
+        // 清除错误提示
+        modal.querySelectorAll('.error-message').forEach(error => {
+            error.textContent = '';
+        });
+    }
 }
+
+// 添加点击模态框外部关闭功能
+document.querySelectorAll('.auth-modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeAuthModal(modal.id);
+        }
+    });
+});
+
+// 更新关闭按钮事件监听
+document.querySelectorAll('.auth-modal .close').forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+        const modal = closeBtn.closest('.auth-modal');
+        if (modal) {
+            closeAuthModal(modal.id);
+        }
+    });
+});
 
 // 绑定登录按钮点击事件
 document.getElementById('loginBtn').addEventListener('click', () => {
