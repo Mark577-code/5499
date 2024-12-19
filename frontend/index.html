@@ -2,15 +2,14 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;">
     <meta name="description" content="在线表白模板生成器 - 浪漫、幽默、简单的表白文案">
     <meta name="keywords" content="表白,表白模板,表白生成器,情话,告白">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="css/styles.css" as="style">
-    <link rel="preload" href="js/app.js" as="script">
-    <link rel="preload" href="js/data.js" as="script">
     <title>表白模板生成器</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=<%= VERSION %>">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -39,11 +38,11 @@
             <!-- 模板卡片将通过 JavaScript 动态生成 -->
         </section>
 
-        <!-- 在模板展示区域添加刷新按钮 -->
+        <!-- 在模板展示区域添加��新按钮 -->
         <div class="template-actions">
             <button id="refreshBtn" class="refresh-btn">
                 <span class="refresh-icon">↻</span>
-                换一个
+                换一批
             </button>
         </div>
     </main>
@@ -163,14 +162,40 @@
                     <span class="error-message"></span>
                 </div>
                 <div class="auth-actions">
-                    <button type="button" onclick="showAuthModal('loginModal')">返回登录</button>
+                    <button type="button" onclick="showAuthModal('loginModal')">��回登录</button>
                     <button type="submit" class="primary-btn">重置密码</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="js/data.js"></script>
-    <script src="js/app.js"></script>
+    <!-- 主题切换按钮 -->
+    <div class="theme-switcher">
+        <button class="theme-btn" data-theme="romantic">
+            <span class="icon">🌹</span>
+            <span class="name">浪漫文艺</span>
+            <span class="description">���优美的文字表达真挚的爱</span>
+        </button>
+        <button class="theme-btn" data-theme="humor">
+            <span class="icon">😊</span>
+            <span class="name">幽默风趣</span>
+            <span class="description">用俏皮的话语传达甜蜜</span>
+        </button>
+        <button class="theme-btn" data-theme="simple">
+            <span class="icon">💝</span>
+            <span class="name">简单直接</span>
+            <span class="description">用真诚的话语表达心意</span>
+        </button>
+    </div>
+
+    <!-- 语言切换按钮 -->
+    <div class="language-switcher">
+        <button class="language-btn" data-lang="zh">🇨🇳</button>
+        <button class="language-btn" data-lang="en">🇺🇸</button>
+        <button class="language-btn" data-lang="ar">🇸🇦</button>
+    </div>
+
+    <script src="js/data.js?v=<%= VERSION %>" defer></script>
+    <script src="js/app.js?v=<%= VERSION %>" defer></script>
 </body>
 </html> 

@@ -4,6 +4,25 @@
     --background-color: #fff0f5;
 }
 
+/* 主题类 */
+.theme-romantic {
+    --primary-color: #ff69b4;
+    --secondary-color: #ff1493;
+    --background-color: #fff0f5;
+}
+
+.theme-humor {
+    --primary-color: #ff9933;
+    --secondary-color: #ff6600;
+    --background-color: #fff5e6;
+}
+
+.theme-simple {
+    --primary-color: #66ccff;
+    --secondary-color: #3399ff;
+    --background-color: #f0f8ff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -178,8 +197,8 @@ nav {
 }
 
 .auth-logo {
-    width: 75px;
-    height: 75px;
+    width: 90px;
+    height: 80px;
     margin-bottom: 1rem;
     background: none;
     border-radius: 50%;
@@ -390,7 +409,7 @@ nav {
     color: #ff4444;
 }
 
-/* 更新时间样式 */
+/* 更新时样式 */
 .update-info {
     text-align: center;
     color: #666;
@@ -482,16 +501,18 @@ nav {
 }
 
 .refresh-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 20px;
+    gap: 8px;
+    padding: 10px 20px;
     background: var(--primary-color);
     color: white;
+    border: none;
+    border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s;
+    margin: 20px auto;
+    font-size: 1.1em;
 }
 
 .refresh-btn:hover {
@@ -499,13 +520,53 @@ nav {
     transform: scale(1.05);
 }
 
-.refresh-btn .refresh-icon {
+.refresh-icon {
     display: inline-block;
-    transition: transform 0.3s;
+    transition: transform 0.5s;
 }
 
 .refresh-btn:hover .refresh-icon {
     transform: rotate(180deg);
+}
+
+/* 刷新动画 */
+@keyframes refreshCard {
+    0% {
+        transform: scale(0.95);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.refresh-animation {
+    animation: refreshCard 0.5s ease-out;
+}
+
+/* 模板卡片容器样式调整 */
+.template-container {
+    min-height: 400px; /* 确保有足够的空间显示卡片 */
+    position: relative;
+}
+
+/* 添加加载动画 */
+.template-card.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 /* 移动端适配 */
@@ -624,4 +685,180 @@ nav {
     to {
         transform: rotate(360deg);
     }
-} 
+}
+
+/* 添加主题切换按钮样式 */
+.theme-switcher {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.theme-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.theme-btn .icon {
+    font-size: 1.2em;
+}
+
+.theme-btn .description {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+/* 语言切换按钮 */
+.language-switcher {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.language-btn {
+    padding: 8px;
+    margin: 4px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* RTL 支持 - 修改和优化 */
+[dir="rtl"] {
+    /* 基础文本方向 */
+    text-align: right;
+    
+    /* 导航栏 */
+    .nav-links {
+        flex-direction: row-reverse;
+    }
+    
+    /* 搜索框 */
+    #searchInput {
+        text-align: right;
+        padding: 1rem 1.5rem 1rem 1rem;
+    }
+    
+    /* 分类按钮 */
+    .categories {
+        direction: rtl;
+    }
+    
+    /* 模板卡片 */
+    .template-card {
+        text-align: right;
+        
+        h3 {
+            text-align: right;
+        }
+        
+        .template-content {
+            text-align: right;
+            line-height: 1.8;
+        }
+        
+        .template-actions {
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+        }
+    }
+    
+    /* 按钮样式 */
+    .use-btn {
+        flex-direction: row-reverse;
+        
+        .btn-icon {
+            margin-left: 0;
+            margin-right: 8px;
+        }
+    }
+    
+    /* 模态框 */
+    .modal-content {
+        text-align: right;
+        
+        .close {
+            left: 1rem;
+            right: auto;
+        }
+    }
+    
+    /* 空内容提示 */
+    .empty-message {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+/* 阿拉伯语特定样式 */
+[lang="ar"] {
+    /* 使用阿拉伯语字体 */
+    font-family: 'Noto Sans Arabic', 'Arial', sans-serif;
+    
+    /* 调整字体大小和行高 */
+    .template-card {
+        h3 {
+            font-size: 1.5em;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .template-content {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+    }
+    
+    /* 按钮文本 */
+    .use-btn {
+        font-size: 1.1em;
+        padding: 10px 20px;
+    }
+    
+    /* 分类按钮 */
+    .category-btn {
+        font-size: 1.1em;
+        padding: 8px 16px;
+    }
+    
+    /* 空内容提示 */
+    .empty-message {
+        font-size: 1.2em;
+        padding: 2rem;
+        color: #666;
+    }
+}
+
+/* 空内容提示样式 */
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 1rem;
+    grid-column: 1 / -1;
+    color: #666;
+}

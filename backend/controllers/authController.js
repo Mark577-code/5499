@@ -8,13 +8,13 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD // 使用应用专用密码
+        pass: process.env.EMAIL_APP_PWD
     }
 });
 
 // 生成JWT token
 const generateToken = (userId) => {
-    return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    return jwt.sign({ id: userId }, process.env.JWT_SECRET_KEY, {
         expiresIn: '24h'
     });
 };
