@@ -13,11 +13,12 @@ const copyBtn = document.getElementById('copyBtn');
 
 // 渲染模板卡片
 function renderTemplates(templatesArray) {
-    templateContainer.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     
-    templatesArray.forEach(template => {
+    templatesArray.forEach((template, index) => {
         const card = document.createElement('div');
         card.className = 'template-card';
+        card.style.animationDelay = `${index * 0.1}s`;
         card.dataset.category = template.category;
         card.innerHTML = `
             <h3>${template.title}</h3>
@@ -26,8 +27,11 @@ function renderTemplates(templatesArray) {
                 <button onclick="showTemplate(${template.id})">使用这个</button>
             </div>
         `;
-        templateContainer.appendChild(card);
+        fragment.appendChild(card);
     });
+    
+    templateContainer.innerHTML = '';
+    templateContainer.appendChild(fragment);
 }
 
 // 显示模板详情
@@ -71,7 +75,7 @@ closeBtn.addEventListener('click', () => {
 
 copyBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(modalContent.textContent)
-        .then(() => alert('文本已复��到剪贴板！'))
+        .then(() => alert('文本已复制到剪贴板！'))
         .catch(err => console.error('复制失败：', err));
 });
 
@@ -151,14 +155,14 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
     
-    // 注册成功后自动登录
+    // 注册成功后自动���录
     localStorage.setItem('currentUser', JSON.stringify(newUser));
     closeAuthModal('registerModal');
     updateUIForLoggedInUser(newUser);
     alert('注册成功！');
 });
 
-// 显示���误信息
+// 显示错误信息
 function showError(inputId, message) {
     const input = document.getElementById(inputId);
     const errorSpan = input.nextElementSibling.nextElementSibling;
@@ -311,4 +315,36 @@ document.getElementById('refreshBtn').addEventListener('click', async () => {
     } catch (error) {
         showToast('生成新内容失败', 'error');
     }
-}); 
+});
+
+// 添加图片懒加载
+function lazyLoadImages() {
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// 添加加载状态指示
+function showLoading() {
+    const loadingEl = document.createElement('div');
+    loadingEl.className = 'loading-overlay';
+    loadingEl.innerHTML = '<div class="loading-spinner"></div>';
+    document.body.appendChild(loadingEl);
+}
+
+function hideLoading() {
+    const loadingEl = document.querySelector('.loading-overlay');
+    if (loadingEl) {
+        loadingEl.remove();
+    }
+} 
