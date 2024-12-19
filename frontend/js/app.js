@@ -69,7 +69,7 @@ function renderTemplates(category = 'all') {
                 fragment.appendChild(card);
             });
         } else {
-            // 如果该类别没有模板，显示提示信息
+            // 如果该类���没有模板，显示提示信息
             const emptyMessage = document.createElement('div');
             emptyMessage.className = 'empty-message';
             emptyMessage.textContent = uiText[currentLang].emptyCategory || '该类别暂无内容';
@@ -642,4 +642,93 @@ document.addEventListener('DOMContentLoaded', () => {
     initThemeSwitcher();
     initLanguageSwitcher();
     renderTemplates(templates);
+});
+
+// 音乐控制相关代码
+document.addEventListener('DOMContentLoaded', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let isMusicPlaying = false;
+
+    // 音乐播放状态管理
+    function toggleMusic() {
+        if (isMusicPlaying) {
+            bgMusic.pause();
+            musicToggle.classList.remove('playing');
+            isMusicPlaying = false;
+        } else {
+            playMusic();
+        }
+    }
+
+    // 播放音乐函数
+    function playMusic() {
+        try {
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicToggle.classList.add('playing');
+                    isMusicPlaying = true;
+                }).catch(error => {
+                    console.error('播放失败:', error);
+                    showErrorTip('音乐播放失败，请点击按钮手动播放');
+                });
+            }
+        } catch (error) {
+            console.error('播放出错:', error);
+            showErrorTip('音乐播放出错，请检查音频文件');
+        }
+    }
+
+    // 显示错误提示
+    function showErrorTip(message) {
+        const tip = document.createElement('div');
+        tip.className = 'error-tip';
+        tip.textContent = message;
+        tip.style.cssText = `
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: fadeInOut 2s ease-in-out;
+            z-index: 1000;
+        `;
+        document.body.appendChild(tip);
+        setTimeout(() => tip.remove(), 3000);
+    }
+
+    // 点击事件监听
+    musicToggle.addEventListener('click', toggleMusic);
+
+    // 页面可见性变化时的处理
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && isMusicPlaying) {
+            bgMusic.pause();
+            musicToggle.classList.remove('playing');
+            isMusicPlaying = false;
+        } else if (!document.hidden && isMusicPlaying) {
+            playMusic();
+        }
+    });
+
+    // 设置音量
+    bgMusic.volume = 0.3;
+
+    // 音频加载错误处理
+    bgMusic.addEventListener('error', (e) => {
+        console.error('音频加载失败:', e);
+        showErrorTip('背景音乐加载失败，请检查文件路径');
+    });
+
+    // 尝试自动播放
+    window.addEventListener('load', () => {
+        // 延迟一秒后尝试播放，给音频文件加载的时间
+        setTimeout(() => {
+            playMusic();
+        }, 1000);
+    });
 }); 

@@ -906,3 +906,99 @@ nav {
     background: rgba(0,0,0,0.1);
     transform: rotate(90deg);
 }
+
+/* 音乐控制器样式 */
+.music-controller {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+.music-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.music-icon {
+    font-size: 20px;
+}
+
+/* 音乐波浪动画 */
+.music-waves {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.music-waves span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: waves 1s ease-out infinite;
+    opacity: 0;
+}
+
+.music-waves span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.music-waves span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* 播放状态 */
+.music-btn.playing .music-waves {
+    display: block;
+}
+
+@keyframes waves {
+    0% {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+    100% {
+        width: 150%;
+        height: 150%;
+        opacity: 0;
+    }
+}
+
+/* RTL 支持 */
+[dir="rtl"] .music-controller {
+    right: auto;
+    left: 20px;
+}
+
+/* 音乐提示动画 */
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
