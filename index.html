@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表白模板生成器</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>表白模板生成器</h1>
+            <div class="nav-links">
+                <button id="loginBtn">登录</button>
+                <button id="registerBtn">注册</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <input type="text" id="searchInput" placeholder="搜索模板...">
+        </section>
+
+        <section class="categories">
+            <button class="category-btn active" data-category="all">全部</button>
+            <button class="category-btn" data-category="romantic">浪漫文艺</button>
+            <button class="category-btn" data-category="humor">幽默风趣</button>
+            <button class="category-btn" data-category="simple">简单直接</button>
+        </section>
+
+        <section id="templateContainer" class="template-container">
+            <!-- 模板卡片将通过 JavaScript 动态生成 -->
+        </section>
+
+        <!-- 在模板展示区域添加刷新按钮 -->
+        <div class="template-actions">
+            <button id="refreshBtn" class="refresh-btn">
+                <span class="refresh-icon">↻</span>
+                换一个
+            </button>
+        </div>
+    </main>
+
+    <!-- 模板详情模态框 -->
+    <div id="templateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalContent"></p>
+            <button id="copyBtn">复制文本</button>
+        </div>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div id="loginModal" class="auth-modal">
+        <div class="auth-content">
+            <span class="close" onclick="closeAuthModal('loginModal')">&times;</span>
+            <div class="auth-header">
+                <img src="assets/images/logo.png" alt="Logo" class="auth-logo">
+                <h2>登录</h2>
+                <p>使用您的账号</p>
+            </div>
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" required>
+                    <label for="loginEmail">电子邮箱</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" required>
+                    <label for="loginPassword">密码</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe">
+                        <span>记住我</span>
+                    </label>
+                    <a href="#" class="forgot-password">忘记密码？</a>
+                </div>
+                <div class="auth-actions">
+                    <button type="button" onclick="showAuthModal('registerModal')">创建账号</button>
+                    <button type="submit" class="primary-btn">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div id="registerModal" class="auth-modal">
+        <div class="auth-content">
+            <span class="close" onclick="closeAuthModal('registerModal')">&times;</span>
+            <div class="auth-header">
+                <img src="assets/images/logo.png" alt="Logo" class="auth-logo">
+                <h2>创建账号</h2>
+                <p>开始您的表白之旅</p>
+            </div>
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <input type="text" id="registerUsername" required>
+                    <label for="registerUsername">用户名</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="registerEmail" required>
+                    <label for="registerEmail">电子邮箱</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="registerPassword" required>
+                    <label for="registerPassword">密码</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmPassword" required>
+                    <label for="confirmPassword">确认密码</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="auth-actions">
+                    <button type="button" onclick="showAuthModal('loginModal')">返回登录</button>
+                    <button type="submit" class="primary-btn">注册</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加忘记密码模态框 -->
+    <div id="forgotPasswordModal" class="auth-modal">
+        <div class="auth-content">
+            <span class="close" onclick="closeAuthModal('forgotPasswordModal')">&times;</span>
+            <div class="auth-header">
+                <img src="assets/images/logo.png" alt="Logo" class="auth-logo">
+                <h2>重置密码</h2>
+                <p>我们将向您的邮箱发送验证码</p>
+            </div>
+            <form id="forgotPasswordForm" class="auth-form">
+                <div class="form-group">
+                    <input type="email" id="resetEmail" required>
+                    <label for="resetEmail">电子邮箱</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group verification-group">
+                    <input type="text" id="verificationCode" required>
+                    <label for="verificationCode">验证码</label>
+                    <button type="button" id="sendCodeBtn" class="send-code-btn">发送验证码</button>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="newPassword" required>
+                    <label for="newPassword">新密码</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmNewPassword" required>
+                    <label for="confirmNewPassword">确认新密码</label>
+                    <span class="error-message"></span>
+                </div>
+                <div class="auth-actions">
+                    <button type="button" onclick="showAuthModal('loginModal')">返回登录</button>
+                    <button type="submit" class="primary-btn">重置密码</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

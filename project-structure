@@ -1,0 +1,19 @@
+love-confession-templates/
+├── frontend/
+│   ├── index.html
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   ├── app.js
+│   │   └── data.js
+│   └── images/
+│       └── background.jpg
+└── backend/
+    ├── config/
+    ├── controllers/
+    ├── models/
+    ├── routes/
+    ├── utils/
+    ├── middleware/
+    ├── package.json
+    └── server.js 

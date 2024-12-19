@@ -1,0 +1,40 @@
+<!-- 在导航栏用户信息部分添加头像 -->
+<div class="nav-links">
+    <div class="user-info" style="display: none;">
+        <img id="userAvatar" class="avatar" src="images/logo.png" alt="用户头像">
+        <span id="username"></span>
+        <div class="dropdown-content">
+            <button id="changeAvatarBtn">修改头像</button>
+            <button onclick="logout()">退出登录</button>
+        </div>
+    </div>
+    <button id="loginBtn">登录</button>
+    <button id="registerBtn">注册</button>
+</div>
+
+<!-- 添加头像上传模态框 -->
+<div id="avatarModal" class="auth-modal">
+    <div class="auth-content">
+        <span class="close" onclick="closeAuthModal('avatarModal')">&times;</span>
+        <div class="auth-header">
+            <h2>修改头像</h2>
+        </div>
+        <form id="avatarForm" class="auth-form">
+            <div class="avatar-preview">
+                <img id="avatarPreview" src="images/logo.png" alt="头像预览">
+            </div>
+            <div class="form-group">
+                <input type="file" id="avatarInput" accept="image/*" required>
+            </div>
+            <div class="auth-actions">
+                <button type="button" onclick="closeAuthModal('avatarModal')">取消</button>
+                <button type="submit" class="primary-btn">保存</button>
+            </div>
+        </form>
+    </div>
+</div> 
+
+<!-- 添加loading组件 -->
+<div id="loading">
+    <div class="spinner"></div>
+</div>
